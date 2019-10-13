@@ -24,7 +24,7 @@ const docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' })
 
 The main things you will be doing are interacting with the database in one of the following ways:
 
-[put]()
+[put](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property)
 [scan](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#scan-property) -
 [get](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property) -
 [query](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#query-property) -
@@ -34,4 +34,4 @@ The main things you will be doing are interacting with the database in one of th
 There are also other methods that you may be using:
 
 [batchGet](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#batchGet-property) -
-
+[batchWrite](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#batchWrite-property)
