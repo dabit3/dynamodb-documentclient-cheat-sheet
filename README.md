@@ -43,7 +43,7 @@ There are also other methods that you may be using:
 
 ## Usage
 
-### Creating an item (`putItem`)
+### Put - Creating a new item
 
 [put](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property)
 
@@ -97,4 +97,50 @@ exports.handler = async (event, context) => {
   }
 }
 
+```
+
+### scan - scanning and returning all of the items in the database
+
+```javascript
+const AWS = require('aws-sdk')
+const docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' })
+
+var params = {
+  TableName : 'ProductTable',
+  FilterExpression : '#shoename = :shoename', // optional
+  ExpressionAttributeValues : {':shoename' : 'yeezys'}, // optional
+  ExpressionAttributeNames: { '#shoename': 'name' } // optional
+}
+
+documentClient.scan(params, function(err, data) {
+  if (err) console.log(err);
+  else console.log(data);
+})
+
+// async function abstraction
+function listItems(){
+  var params = {
+    TableName: process.env.DDB_TABLE_NAME,
+  }
+  return new Promise((resolve, reject) => {
+    docClient.scan(params, function(err, data) {
+      if (err) {
+        console.log('error getting items!: ', err)
+        reject(err)
+      } else {
+        resolve(data)
+      }
+    })
+  })
+}
+
+// usage
+exports.handler = async (event, context) => {
+  try {
+    const data = await listItems()
+    return { data }
+  } catch (err) {
+    return { error: err }
+  }
+}
 ```
