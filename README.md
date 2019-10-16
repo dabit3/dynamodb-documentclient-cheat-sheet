@@ -285,12 +285,12 @@ function deleteItem(id){
   }
 
   return new Promise((resolve, reject) => {
-    docClient.delete(params, function(err, data) {
+    docClient.delete(params, function(err) {
       if (err) {
         console.log('error deleting item!: ', err)
         reject(err)
       } else {
-        resolve(data)
+        resolve()
       }
     })
   })
@@ -339,7 +339,7 @@ function updateItem(id, price){
   }
 
   return new Promise((resolve, reject) => {
-    docClient.delete(params, function(err, data) {
+    docClient.update(params, function(err) {
       if (err) {
         console.log('error updating item!: ', err)
         reject(err)
@@ -354,7 +354,7 @@ function updateItem(id, price){
 exports.handler = async (event, context) => {
   try {
     const { id, price } = event.item
-    await deleteItem(id, price)
+    await updateItem(id, price)
     return { success: 'successfully updated item' }
   } catch (err) {
     return { error: err }
