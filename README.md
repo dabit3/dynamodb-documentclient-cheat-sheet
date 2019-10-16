@@ -6,6 +6,8 @@ This cheat sheet will help you get up and running quickly building applications 
 
 This is meant to be a concise version of the full documentation located [here](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html) to help you get productive as quickly as possible.
 
+For more great DynamoDB resources, check out the [DynamoDB Guide](https://www.dynamodbguide.com/).
+
 ## Getting started
 
 1. Make sure you have the `aws-sdk` JavaScript SDK installed or available in the environment. If you are using AWS Lambda, this should already be available.
