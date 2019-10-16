@@ -26,14 +26,14 @@ const docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' })
 
 The main things you will be doing are interacting with the database in one of the following ways:
 
-[put](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property) - Creates a new item, or replaces an old item with a new item by delegating to AWS.DynamoDB.putItem().    
-[scan](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#scan-property) - Returns one or more items and item attributes by accessing every item in a table or a secondary index.    
-[get](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property) - Returns a single item given the primary key of that item    
-[query](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#query-property) - Returns one or more items and item attributes by accessing every item in a table or a secondary index.    
-[delete](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#delete-property) - Deletes a single item in a table by primary key by delegating to AWS.DynamoDB.deleteItem().   
-[update](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#update-property) - Edits an existing item's attributes, or adds a new item to the table if it does not already exist by delegating to AWS.DynamoDB.updateItem().    
+[put]() - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property) - Creates a new item, or replaces an old item with a new item by delegating to AWS.DynamoDB.putItem().    
+[scan]() - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#scan-property) - Returns one or more items and item attributes by accessing every item in a table or a secondary index.    
+[get]() - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property) - Returns a single item given the primary key of that item    
+[query]() - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#query-property) - Returns one or more items and item attributes by accessing every item in a table or a secondary index.    
+[delete]() - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#delete-property) - Deletes a single item in a table by primary key by delegating to AWS.DynamoDB.deleteItem().   
+[update]() - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#update-property) - Edits an existing item's attributes, or adds a new item to the table if it does not already exist by delegating to AWS.DynamoDB.updateItem().    
 
-There are also other methods that you may be using:
+There are also other methods:
 
 [batchGet](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#batchGet-property) - Returns the attributes of one or more items from one or more tables by delegating to AWS.DynamoDB.batchGetItem().    
 [batchWrite](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#batchWrite-property) - Puts or deletes multiple items in one or more tables by delegating to AWS.DynamoDB.batchWriteItem().    
@@ -147,7 +147,6 @@ exports.handler = async (event, context) => {
 
 ### get - getting a single item by primary key
 
-
 ```javascript
 const AWS = require('aws-sdk')
 const docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' })
@@ -188,6 +187,60 @@ function getItem(id){
 exports.handler = async (event, context) => {
   try {
     const data = await getItem(event.item.id)
+    return { data }
+  } catch (err) {
+    return { error: err }
+  }
+}
+```
+
+### query - Access items from a table by primary key or a secondary index / GSI.
+
+```javascript
+const AWS = require('aws-sdk')
+const docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' })
+
+var params = {
+  TableName: process.env.DDB_TABLE_NAME,
+  IndexName: 'type-index',
+  ExpressionAttributeNames: { '#typename': 'type' },
+  KeyConditionExpression: '#typename = :typename',
+  ExpressionAttributeValues: { ':typename': 'hat' }
+}
+
+var documentClient = new AWS.DynamoDB.DocumentClient();
+
+documentClient.query(params, function(err, data) {
+   if (err) console.log(err);
+   else console.log(data);
+});
+
+// async function abstraction
+function queryItems(type){
+  var params = {
+    TableName: process.env.DDB_TABLE_NAME,
+    IndexName: 'type-index',
+    ExpressionAttributeNames: { '#typename': 'type' },
+    KeyConditionExpression: '#typename = :typename',
+    ExpressionAttributeValues: { ':typename': type }
+  }
+
+  return new Promise((resolve, reject) => {
+    docClient.get(params, function(err, data) {
+      if (err) {
+        console.log('error getting item!: ', err)
+        reject(err)
+      } else {
+        resolve(data)
+      }
+    })
+  })
+}
+
+// usage
+exports.handler = async (event, context) => {
+  try {
+    const data = await queryItems(event.item.type)
     return { data }
   } catch (err) {
     return { error: err }
