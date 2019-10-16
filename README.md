@@ -22,7 +22,7 @@ const AWS = require('aws-sdk')
 const docClient = new AWS.DynamoDB.DocumentClient()
 ```
 
-The `new AWS.DynamoDB.DocumentClient()` constructor takes an options hash of options. For instance, if you are wanting to set the location to a different region than the Lambda function, you could pass it in like this:
+The `new AWS.DynamoDB.DocumentClient()` constructor takes an options hash of options. For instance, if you are wanting to set the location to a different region than the main AWS configuration, you could pass it in like this:
 
 ```javascript
 const docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-2' })
