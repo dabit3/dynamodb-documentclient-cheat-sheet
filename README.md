@@ -14,7 +14,7 @@ This is meant to be a concise version of the full documentation located [here](h
 npm install aws-sdk
 ```
 
-2. In the function, import the SDK and create a new DynamoDB document client with a set of configuration options.
+2. Import the SDK and create a new DynamoDB document client with a set of configuration options.
 
 
 ```javascript
