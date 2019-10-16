@@ -63,8 +63,8 @@ var params = {
 }
 
 documentClient.put(params, function(err, data) {
-  if (err) console.log(err);
-  else console.log(data);
+  if (err) console.log(err)
+  else console.log(data)
 })
 
 
@@ -113,8 +113,8 @@ var params = {
 }
 
 documentClient.scan(params, function(err, data) {
-  if (err) console.log(err);
-  else console.log(data);
+  if (err) console.log(err)
+  else console.log(data)
 })
 
 // async function abstraction
@@ -138,6 +138,56 @@ function listItems(){
 exports.handler = async (event, context) => {
   try {
     const data = await listItems()
+    return { data }
+  } catch (err) {
+    return { error: err }
+  }
+}
+```
+
+### get - getting a single item by primary key
+
+
+```javascript
+const AWS = require('aws-sdk')
+const docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' })
+
+var params = {
+  TableName : process.env.DDB_TABLE_NAME,
+  Key: {
+    HashKey: 'hashkey'
+  }
+}
+
+var documentClient = new AWS.DynamoDB.DocumentClient()
+
+documentClient.get(params, function(err, data) {
+  if (err) console.log(err)
+  else console.log(data)
+})
+
+// async function abstraction
+function getItem(id){
+  var params = {
+    TableName : process.env.DDB_TABLE_NAME,
+    Key: { id }
+  }
+  return new Promise((resolve, reject) => {
+    docClient.get(params, function(err, data) {
+      if (err) {
+        console.log('error getting item!: ', err)
+        reject(err)
+      } else {
+        resolve(data)
+      }
+    })
+  })
+}
+
+// usage
+exports.handler = async (event, context) => {
+  try {
+    const data = await getItem(event.item.id)
     return { data }
   } catch (err) {
     return { error: err }
