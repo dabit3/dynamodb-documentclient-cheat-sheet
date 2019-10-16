@@ -45,7 +45,7 @@ There are also other methods:
 
 ### Put - Creating a new item
 
-[put](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property)
+[full docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property)
 
 ```javascript
 const AWS = require('aws-sdk')
@@ -101,6 +101,8 @@ exports.handler = async (event, context) => {
 
 ### scan - scanning and returning all of the items in the database
 
+[full docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#scan-property)
+
 ```javascript
 const AWS = require('aws-sdk')
 const docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' })
@@ -146,6 +148,8 @@ exports.handler = async (event, context) => {
 ```
 
 ### get - getting a single item by primary key
+
+[full docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property)
 
 ```javascript
 const AWS = require('aws-sdk')
@@ -195,6 +199,8 @@ exports.handler = async (event, context) => {
 ```
 
 ### query - Access items from a table by primary key or a secondary index / GSI.
+
+[full docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#query-property)
 
 ```javascript
 const AWS = require('aws-sdk')
@@ -250,6 +256,8 @@ exports.handler = async (event, context) => {
 
 ### delete - Delete a single item
 
+[full docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#delete-property)
+
 ```javascript
 const AWS = require('aws-sdk')
 const docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' })
@@ -300,6 +308,8 @@ exports.handler = async (event, context) => {
 ```
 
 ### update - Update a single item
+
+[full docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#update-property)
 
 ```javascript
 const AWS = require('aws-sdk')
