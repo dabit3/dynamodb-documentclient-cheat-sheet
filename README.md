@@ -26,10 +26,10 @@ const docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' })
 
 The main things you will be doing are interacting with the database in one of the following ways:
 
-[put]() - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property) - Creates a new item, or replaces an old item with a new item by delegating to AWS.DynamoDB.putItem().    
-[scan]() - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#scan-property) - Returns one or more items and item attributes by accessing every item in a table or a secondary index.    
-[get]() - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property) - Returns a single item given the primary key of that item    
-[query]() - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#query-property) - Returns one or more items and item attributes by accessing every item in a table or a secondary index.    
+[put](https://github.com/dabit3/dynamodb-documentclient-cheat-sheet#put---creating-a-new-item) - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property) - Creates a new item, or replaces an old item with a new item by delegating to AWS.DynamoDB.putItem().    
+[scan](https://github.com/dabit3/dynamodb-documentclient-cheat-sheet#scan---scanning-and-returning-all-of-the-items-in-the-database) - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#scan-property) - Returns one or more items and item attributes by accessing every item in a table or a secondary index.    
+[get](https://github.com/dabit3/dynamodb-documentclient-cheat-sheet#get---getting-a-single-item-by-primary-key) - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property) - Returns a single item given the primary key of that item    
+[query](https://github.com/dabit3/dynamodb-documentclient-cheat-sheet#query---access-items-from-a-table-by-primary-key-or-a-secondary-index--gsi) - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#query-property) - Returns one or more items and item attributes by accessing every item in a table or a secondary index.    
 [delete]() - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#delete-property) - Deletes a single item in a table by primary key by delegating to AWS.DynamoDB.deleteItem().   
 [update]() - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#update-property) - Edits an existing item's attributes, or adds a new item to the table if it does not already exist by delegating to AWS.DynamoDB.updateItem().    
 
@@ -71,7 +71,7 @@ documentClient.put(params, function(err, data) {
 // async function abstraction
 function createItem(itemData){
   var params = {
-    TableName: process.env.DDB_TABLE_NAME,
+    TableName: 'ProductTable',
     Item: itemData
   }
   return new Promise((resolve, reject) => {
@@ -120,7 +120,7 @@ documentClient.scan(params, function(err, data) {
 // async function abstraction
 function listItems(){
   var params = {
-    TableName: process.env.DDB_TABLE_NAME,
+    TableName: 'ProductTable',
   }
   return new Promise((resolve, reject) => {
     docClient.scan(params, function(err, data) {
@@ -152,7 +152,7 @@ const AWS = require('aws-sdk')
 const docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' })
 
 var params = {
-  TableName : process.env.DDB_TABLE_NAME,
+  TableName : 'ProductTable',
   Key: {
     HashKey: 'hashkey'
   }
@@ -168,7 +168,7 @@ documentClient.get(params, function(err, data) {
 // async function abstraction
 function getItem(id){
   var params = {
-    TableName : process.env.DDB_TABLE_NAME,
+    TableName : 'ProductTable,
     Key: { id }
   }
   return new Promise((resolve, reject) => {
@@ -201,7 +201,7 @@ const AWS = require('aws-sdk')
 const docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' })
 
 var params = {
-  TableName: process.env.DDB_TABLE_NAME,
+  TableName: 'ProductTable',
   IndexName: 'type-index',
   ExpressionAttributeNames: { '#typename': 'type' },
   KeyConditionExpression: '#typename = :typename',
@@ -218,7 +218,7 @@ documentClient.query(params, function(err, data) {
 // async function abstraction
 function queryItems(type){
   var params = {
-    TableName: process.env.DDB_TABLE_NAME,
+    TableName: 'ProductTable,
     IndexName: 'type-index',
     ExpressionAttributeNames: { '#typename': 'type' },
     KeyConditionExpression: '#typename = :typename',
@@ -228,7 +228,7 @@ function queryItems(type){
   return new Promise((resolve, reject) => {
     docClient.get(params, function(err, data) {
       if (err) {
-        console.log('error getting item!: ', err)
+        console.log('error querying items!: ', err)
         reject(err)
       } else {
         resolve(data)
@@ -242,6 +242,110 @@ exports.handler = async (event, context) => {
   try {
     const data = await queryItems(event.item.type)
     return { data }
+  } catch (err) {
+    return { error: err }
+  }
+}
+```
+
+### delete - Delete a single item
+
+```javascript
+const AWS = require('aws-sdk')
+const docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' })
+
+var params = {
+  TableName : 'ProductTable',
+  Key: {
+    id: 'my-item-id-to-delete',
+  }
+};
+
+var documentClient = new AWS.DynamoDB.DocumentClient();
+
+documentClient.delete(params, function(err, data) {
+   if (err) console.log(err);
+   else console.log(data);
+});
+
+
+// async function abstraction
+function deleteItem(id){
+  var params = {
+    TableName : 'ProductTable',
+    Key: { id }
+  }
+
+  return new Promise((resolve, reject) => {
+    docClient.delete(params, function(err, data) {
+      if (err) {
+        console.log('error deleting item!: ', err)
+        reject(err)
+      } else {
+        resolve(data)
+      }
+    })
+  })
+}
+
+// usage
+exports.handler = async (event, context) => {
+  try {
+    await deleteItem(event.item.id)
+    return { success: 'successfully deleted item' }
+  } catch (err) {
+    return { error: err }
+  }
+}
+```
+
+### update - Update a single item
+
+```javascript
+const AWS = require('aws-sdk')
+const docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' })
+
+var params = {
+  TableName: 'ProductTable',
+  Key: { id : 'my-item-id' },
+  UpdateExpression: 'set price = :newprice',
+  ExpressionAttributeValues: { ':newprice': 100 }
+}
+
+var documentClient = new AWS.DynamoDB.DocumentClient();
+
+documentClient.update(params, function(err, data) {
+   if (err) console.log(err);
+   else console.log(data);
+});
+
+// async function abstraction
+function updateItem(id, price){
+  var params = {
+    TableName: 'ProductTable',
+    Key: { id },
+    UpdateExpression: 'set price = :newprice',
+    ExpressionAttributeValues: { ':newprice': price }
+  }
+
+  return new Promise((resolve, reject) => {
+    docClient.delete(params, function(err, data) {
+      if (err) {
+        console.log('error updating item!: ', err)
+        reject(err)
+      } else {
+        resolve()
+      }
+    })
+  })
+}
+
+// usage
+exports.handler = async (event, context) => {
+  try {
+    const { id, price } = event.item
+    await deleteItem(id, price)
+    return { success: 'successfully updated item' }
   } catch (err) {
     return { error: err }
   }
