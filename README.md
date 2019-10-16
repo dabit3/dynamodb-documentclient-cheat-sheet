@@ -8,7 +8,7 @@ This is meant to be a concise version of the full documentation located [here](h
 
 ## Getting started
 
-1. Make sure you have the `aws-sdk` JavaScript SDK installed or available in the environment. If you are using Lambda, this should already be available.
+1. Make sure you have the `aws-sdk` JavaScript SDK installed or available in the environment. If you are using AWS Lambda, this should already be available.
 
 ```sh
 npm install aws-sdk
@@ -77,21 +77,17 @@ docClient.put(params, function(err, data) {
 
 
 // async function abstraction
-function createItem(itemData){
+async function createItem(itemData){
   var params = {
     TableName: 'ProductTable',
     Item: itemData
   }
-  return new Promise((resolve, reject) => {
-    docClient.put(params, function(err) {
-      if (err) {
-        console.log('error adding item to dynamo!: ', err)
-        reject(err)
-      } else {
-        resolve()
-      }
-    })
-  })
+  try {
+    await docClient.put(params).promise()
+  } catch (err) {
+    return err
+  }
+  
 }
 
 // usage
@@ -128,20 +124,16 @@ docClient.scan(params, function(err, data) {
 })
 
 // async function abstraction
-function listItems(){
+async function listItems(){
   var params = {
     TableName: 'ProductTable',
   }
-  return new Promise((resolve, reject) => {
-    docClient.scan(params, function(err, data) {
-      if (err) {
-        console.log('error getting items!: ', err)
-        reject(err)
-      } else {
-        resolve(data)
-      }
-    })
-  })
+  try {
+    const data = await docClient.scan(params).promise()
+    return data
+  } catch (err) {
+    return err
+  }
 }
 
 // usage
@@ -176,21 +168,16 @@ docClient.get(params, function(err, data) {
 })
 
 // async function abstraction
-function getItem(id){
+async function getItem(id){
   var params = {
     TableName : 'ProductTable',
     Key: { id }
   }
-  return new Promise((resolve, reject) => {
-    docClient.get(params, function(err, data) {
-      if (err) {
-        console.log('error getting item!: ', err)
-        reject(err)
-      } else {
-        resolve(data)
-      }
-    })
-  })
+  try {
+    const data = await docClient.get(params).promise()
+  } catch (err) {
+    return err
+  }
 }
 
 // usage
@@ -234,17 +221,12 @@ function queryItems(type){
     KeyConditionExpression: '#typename = :typename',
     ExpressionAttributeValues: { ':typename': type }
   }
-
-  return new Promise((resolve, reject) => {
-    docClient.get(params, function(err, data) {
-      if (err) {
-        console.log('error querying items!: ', err)
-        reject(err)
-      } else {
-        resolve(data)
-      }
-    })
-  })
+  try {
+    const data = await docClient.query(params).promise()
+    return data
+  } catch (err) {
+    return err
+  }
 }
 
 // usage
@@ -280,22 +262,16 @@ docClient.delete(params, function(err, data) {
 
 
 // async function abstraction
-function deleteItem(id){
+async function deleteItem(id){
   var params = {
     TableName : 'ProductTable',
     Key: { id }
   }
-
-  return new Promise((resolve, reject) => {
-    docClient.delete(params, function(err) {
-      if (err) {
-        console.log('error deleting item!: ', err)
-        reject(err)
-      } else {
-        resolve()
-      }
-    })
-  })
+  try {
+    await docClient.delete(params).promise()
+  } catch (err) {
+    return err
+  }
 }
 
 // usage
@@ -330,24 +306,18 @@ docClient.update(params, function(err, data) {
 });
 
 // async function abstraction
-function updateItem(id, price){
+async function updateItem(id, price){
   var params = {
     TableName: 'ProductTable',
     Key: { id },
     UpdateExpression: 'set price = :newprice',
     ExpressionAttributeValues: { ':newprice': price }
   }
-
-  return new Promise((resolve, reject) => {
-    docClient.update(params, function(err) {
-      if (err) {
-        console.log('error updating item!: ', err)
-        reject(err)
-      } else {
-        resolve()
-      }
-    })
-  })
+  try {
+    await docClient.update(params).promise()
+  } catch (err) {
+    return err
+  }
 }
 
 // usage
