@@ -19,8 +19,16 @@ npm install aws-sdk
 
 ```javascript
 const AWS = require('aws-sdk')
-const docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' })
+const docClient = new AWS.DynamoDB.DocumentClient()
 ```
+
+The `new AWS.DynamoDB.DocumentClient()` constructor takes an options hash of options. For instance, if you are wanting to set the location to a different region than the Lambda function, you could pass it in like this:
+
+```javascript
+const docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-2' })
+```
+
+ Check out the documentation for those options [here](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#constructor-property).
 
 ## Database operations
 
@@ -49,7 +57,7 @@ There are also other methods:
 
 ```javascript
 const AWS = require('aws-sdk')
-const docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' })
+const docClient = new AWS.DynamoDB.DocumentClient()
 
 var params = {
   TableName : 'ProductTable',
@@ -105,7 +113,7 @@ exports.handler = async (event, context) => {
 
 ```javascript
 const AWS = require('aws-sdk')
-const docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' })
+const docClient = new AWS.DynamoDB.DocumentClient())
 
 var params = {
   TableName : 'ProductTable',
@@ -153,7 +161,7 @@ exports.handler = async (event, context) => {
 
 ```javascript
 const AWS = require('aws-sdk')
-const docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' })
+const docClient = new AWS.DynamoDB.DocumentClient())
 
 var params = {
   TableName : 'ProductTable',
@@ -204,7 +212,7 @@ exports.handler = async (event, context) => {
 
 ```javascript
 const AWS = require('aws-sdk')
-const docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' })
+const docClient = new AWS.DynamoDB.DocumentClient())
 
 var params = {
   TableName: 'ProductTable',
@@ -260,7 +268,7 @@ exports.handler = async (event, context) => {
 
 ```javascript
 const AWS = require('aws-sdk')
-const docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' })
+const docClient = new AWS.DynamoDB.DocumentClient())
 
 var params = {
   TableName : 'ProductTable',
@@ -313,7 +321,7 @@ exports.handler = async (event, context) => {
 
 ```javascript
 const AWS = require('aws-sdk')
-const docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' })
+const docClient = new AWS.DynamoDB.DocumentClient())
 
 var params = {
   TableName: 'ProductTable',
