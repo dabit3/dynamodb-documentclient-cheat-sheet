@@ -70,7 +70,7 @@ var params = {
   }
 }
 
-documentClient.put(params, function(err, data) {
+docClient.put(params, function(err, data) {
   if (err) console.log(err)
   else console.log(data)
 })
@@ -122,7 +122,7 @@ var params = {
   ExpressionAttributeNames: { '#shoename': 'name' } // optional
 }
 
-documentClient.scan(params, function(err, data) {
+docClient.scan(params, function(err, data) {
   if (err) console.log(err)
   else console.log(data)
 })
@@ -170,7 +170,7 @@ var params = {
   }
 }
 
-documentClient.get(params, function(err, data) {
+docClient.get(params, function(err, data) {
   if (err) console.log(err)
   else console.log(data)
 })
@@ -220,7 +220,7 @@ var params = {
   ExpressionAttributeValues: { ':typename': 'hat' }
 }
 
-documentClient.query(params, function(err, data) {
+docClient.query(params, function(err, data) {
    if (err) console.log(err);
    else console.log(data);
 });
@@ -273,7 +273,7 @@ var params = {
   }
 };
 
-documentClient.delete(params, function(err, data) {
+docClient.delete(params, function(err, data) {
    if (err) console.log(err);
    else console.log(data);
 });
@@ -324,7 +324,7 @@ var params = {
   ExpressionAttributeValues: { ':newprice': 100 }
 }
 
-documentClient.update(params, function(err, data) {
+docClient.update(params, function(err, data) {
    if (err) console.log(err);
    else console.log(data);
 });
