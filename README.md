@@ -172,7 +172,7 @@ documentClient.get(params, function(err, data) {
 // async function abstraction
 function getItem(id){
   var params = {
-    TableName : 'ProductTable,
+    TableName : 'ProductTable',
     Key: { id }
   }
   return new Promise((resolve, reject) => {
