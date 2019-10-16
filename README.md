@@ -175,6 +175,7 @@ async function getItem(id){
   }
   try {
     const data = await docClient.get(params).promise()
+    return data
   } catch (err) {
     return err
   }
