@@ -224,7 +224,7 @@ documentClient.query(params, function(err, data) {
 // async function abstraction
 function queryItems(type){
   var params = {
-    TableName: 'ProductTable,
+    TableName: 'ProductTable',
     IndexName: 'type-index',
     ExpressionAttributeNames: { '#typename': 'type' },
     KeyConditionExpression: '#typename = :typename',
