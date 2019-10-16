@@ -4,7 +4,7 @@ The DynamoDB Document Client is the easiest and most preferred way to interact w
 
 This cheat sheet will help you get up and running quickly building applications with DynamoDB in a Nodejs or JavaScript environment.
 
-This is meant to be a concise version of the full documentation located [here](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#constructor-property) to help you get productive as quickly as possible.
+This is meant to be a concise version of the full documentation located [here](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html) to help you get productive as quickly as possible.
 
 ## Getting started
 
