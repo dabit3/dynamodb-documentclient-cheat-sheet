@@ -113,7 +113,7 @@ exports.handler = async (event, context) => {
 
 ```javascript
 const AWS = require('aws-sdk')
-const docClient = new AWS.DynamoDB.DocumentClient())
+const docClient = new AWS.DynamoDB.DocumentClient()
 
 var params = {
   TableName : 'ProductTable',
@@ -161,7 +161,7 @@ exports.handler = async (event, context) => {
 
 ```javascript
 const AWS = require('aws-sdk')
-const docClient = new AWS.DynamoDB.DocumentClient())
+const docClient = new AWS.DynamoDB.DocumentClient()
 
 var params = {
   TableName : 'ProductTable',
@@ -169,8 +169,6 @@ var params = {
     HashKey: 'hashkey'
   }
 }
-
-var documentClient = new AWS.DynamoDB.DocumentClient()
 
 documentClient.get(params, function(err, data) {
   if (err) console.log(err)
@@ -212,7 +210,7 @@ exports.handler = async (event, context) => {
 
 ```javascript
 const AWS = require('aws-sdk')
-const docClient = new AWS.DynamoDB.DocumentClient())
+const docClient = new AWS.DynamoDB.DocumentClient()
 
 var params = {
   TableName: 'ProductTable',
@@ -221,8 +219,6 @@ var params = {
   KeyConditionExpression: '#typename = :typename',
   ExpressionAttributeValues: { ':typename': 'hat' }
 }
-
-var documentClient = new AWS.DynamoDB.DocumentClient();
 
 documentClient.query(params, function(err, data) {
    if (err) console.log(err);
@@ -268,7 +264,7 @@ exports.handler = async (event, context) => {
 
 ```javascript
 const AWS = require('aws-sdk')
-const docClient = new AWS.DynamoDB.DocumentClient())
+const docClient = new AWS.DynamoDB.DocumentClient()
 
 var params = {
   TableName : 'ProductTable',
@@ -276,8 +272,6 @@ var params = {
     id: 'my-item-id-to-delete',
   }
 };
-
-var documentClient = new AWS.DynamoDB.DocumentClient();
 
 documentClient.delete(params, function(err, data) {
    if (err) console.log(err);
@@ -321,7 +315,7 @@ exports.handler = async (event, context) => {
 
 ```javascript
 const AWS = require('aws-sdk')
-const docClient = new AWS.DynamoDB.DocumentClient())
+const docClient = new AWS.DynamoDB.DocumentClient()
 
 var params = {
   TableName: 'ProductTable',
@@ -329,8 +323,6 @@ var params = {
   UpdateExpression: 'set price = :newprice',
   ExpressionAttributeValues: { ':newprice': 100 }
 }
-
-var documentClient = new AWS.DynamoDB.DocumentClient();
 
 documentClient.update(params, function(err, data) {
    if (err) console.log(err);
