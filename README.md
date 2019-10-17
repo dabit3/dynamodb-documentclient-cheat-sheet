@@ -16,7 +16,7 @@ For more great DynamoDB resources, check out the [DynamoDB Guide](https://www.dy
 npm install aws-sdk
 ```
 
-2. Import the SDK and create a new DynamoDB document client with a set of configuration options.
+2. Import the SDK and create a new DynamoDB document client.
 
 
 ```javascript
