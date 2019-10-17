@@ -53,7 +53,7 @@ There are also other methods:
 
 ## Usage
 
-### Put - Creating a new item
+### Put - Creating a new item / replacing an old item with a new item 
 
 [full docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property)
 
