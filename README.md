@@ -1,4 +1,4 @@
-## DynamoBD JavaScript DocumentClient cheat sheet
+## DynamoDB JavaScript DocumentClient cheat sheet
 
 The DynamoDB Document Client is the easiest and most preferred way to interact with a DynamoDB database from a Nodejs or JavaScript application.
 
