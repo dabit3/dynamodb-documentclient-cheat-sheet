@@ -216,7 +216,7 @@ docClient.query(params, function(err, data) {
 });
 
 // async function abstraction
-function queryItems(type){
+async function queryItems(type){
   var params = {
     TableName: 'ProductTable',
     IndexName: 'type-index',
