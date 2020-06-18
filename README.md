@@ -97,7 +97,7 @@ exports.handler = async (event, context) => {
   try {
     const { data } = event.body
     await createItem(data)
-    return { success: 'successfully created item' }
+    return { body: 'successfully created item' }
   } catch (err) {
     return { error: err }
   }
@@ -142,7 +142,7 @@ async function listItems(){
 exports.handler = async (event, context) => {
   try {
     const data = await listItems()
-    return { data }
+    return { body: JSON.stringify(data) }
   } catch (err) {
     return { error: err }
   }
@@ -187,7 +187,7 @@ async function getItem(id){
 exports.handler = async (event, context) => {
   try {
     const data = await getItem(event.item.id)
-    return { data }
+    return { body: JSON.stringify(data) }
   } catch (err) {
     return { error: err }
   }
@@ -236,7 +236,7 @@ function queryItems(type){
 exports.handler = async (event, context) => {
   try {
     const data = await queryItems(event.item.type)
-    return { data }
+    return { body: JSON.stringify(data) }
   } catch (err) {
     return { error: err }
   }
@@ -281,7 +281,7 @@ async function deleteItem(id){
 exports.handler = async (event, context) => {
   try {
     await deleteItem(event.item.id)
-    return { success: 'successfully deleted item' }
+    return { body: 'successfully deleted item' }
   } catch (err) {
     return { error: err }
   }
@@ -328,7 +328,7 @@ exports.handler = async (event, context) => {
   try {
     const { id, price } = event.item
     await updateItem(id, price)
-    return { success: 'successfully updated item' }
+    return { body: 'successfully updated item' }
   } catch (err) {
     return { error: err }
   }
