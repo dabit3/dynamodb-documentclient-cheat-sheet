@@ -205,8 +205,8 @@ const docClient = new AWS.DynamoDB.DocumentClient()
 var params = {
   TableName: 'ProductTable',
   IndexName: 'type-index',
+  KeyConditionExpression: '#typename = :typename', // this equals "type = hat"
   ExpressionAttributeNames: { '#typename': 'type' },
-  KeyConditionExpression: '#typename = :typename',
   ExpressionAttributeValues: { ':typename': 'hat' }
 }
 
