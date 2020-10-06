@@ -41,7 +41,7 @@ The main things you will be doing are interacting with the database in one of th
 [query](https://github.com/dabit3/dynamodb-documentclient-cheat-sheet#query---access-items-from-a-table-by-primary-key-or-a-secondary-index--gsi) - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#query-property) - Returns one or more items and item attributes by accessing every item in a table or a secondary index (maximum of 1 MB of data).  
 [delete](https://github.com/dabit3/dynamodb-documentclient-cheat-sheet#delete---delete-a-single-item) - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#delete-property) - Deletes a single item in a table by primary key by delegating to AWS.DynamoDB.deleteItem().  
 [update](https://github.com/dabit3/dynamodb-documentclient-cheat-sheet#batchWrite---seed-a-table-with-data) - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#update-property) - Edits an existing item's attributes, or adds a new item to the table if it does not already exist by delegating to AWS.DynamoDB.updateItem().  
-[batchWrite](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#batchWrite-property) - [docs]Puts or deletes multiple items in one or more tables by delegating to AWS.DynamoDB.batchWriteItem().
+[batchWrite](https://github.com/dabit3/dynamodb-documentclient-cheat-sheet#batchwrite---seed-a-table-with-data) - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#batchWrite-property) - Puts or deletes multiple items in one or more tables by delegating to AWS.DynamoDB.batchWriteItem().
 
 There are also other methods:
 
@@ -337,7 +337,6 @@ exports.handler = async (event, context) => {
 ```js
 const AWS = require('aws-sdk')
 const docClient = new AWS.DynamoDB.DocumentClient()
-AWS.config.update({ region: 'us-east-1' })
 
 // JSON data
 const fetchedData = [
