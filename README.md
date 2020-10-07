@@ -18,7 +18,6 @@ npm install aws-sdk
 
 2. Import the SDK and create a new DynamoDB document client.
 
-
 ```javascript
 const AWS = require('aws-sdk')
 const docClient = new AWS.DynamoDB.DocumentClient()
@@ -30,30 +29,30 @@ The `AWS.DynamoDB.DocumentClient()` constructor takes an optional hash of option
 const docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-2' })
 ```
 
- Check out the documentation for those options [here](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#constructor-property).
+Check out the documentation for those options [here](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#constructor-property).
 
 ## Database operations
 
 The main things you will be doing are interacting with the database in one of the following ways:
 
-[put](https://github.com/dabit3/dynamodb-documentclient-cheat-sheet#put---creating-a-new-item--replacing-an-old-item-with-a-new-item) - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property) - Creates a new item, or replaces an old item with a new item by delegating to AWS.DynamoDB.putItem().    
-[scan](https://github.com/dabit3/dynamodb-documentclient-cheat-sheet#scan---scanning-and-returning-all-of-the-items-in-the-database) - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#scan-property) - Returns one or more items and item attributes by accessing every item in a table or a secondary index (limit of 1 MB of data).    
-[get](https://github.com/dabit3/dynamodb-documentclient-cheat-sheet#get---getting-a-single-item-by-primary-key) - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property) - Returns a single item given the primary key of that item    
-[query](https://github.com/dabit3/dynamodb-documentclient-cheat-sheet#query---access-items-from-a-table-by-primary-key-or-a-secondary-index--gsi) - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#query-property) - Returns one or more items and item attributes by accessing every item in a table or a secondary index (maximum of 1 MB of data).    
-[delete](https://github.com/dabit3/dynamodb-documentclient-cheat-sheet#delete---delete-a-single-item) - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#delete-property) - Deletes a single item in a table by primary key by delegating to AWS.DynamoDB.deleteItem().   
-[update](https://github.com/dabit3/dynamodb-documentclient-cheat-sheet#update---update-a-single-item) - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#update-property) - Edits an existing item's attributes, or adds a new item to the table if it does not already exist by delegating to AWS.DynamoDB.updateItem().    
+[put](https://github.com/dabit3/dynamodb-documentclient-cheat-sheet#put---creating-a-new-item--replacing-an-old-item-with-a-new-item) - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property) - Creates a new item, or replaces an old item with a new item by delegating to AWS.DynamoDB.putItem().  
+[scan](https://github.com/dabit3/dynamodb-documentclient-cheat-sheet#scan---scanning-and-returning-all-of-the-items-in-the-database) - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#scan-property) - Returns one or more items and item attributes by accessing every item in a table or a secondary index (limit of 1 MB of data).  
+[get](https://github.com/dabit3/dynamodb-documentclient-cheat-sheet#get---getting-a-single-item-by-primary-key) - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property) - Returns a single item given the primary key of that item  
+[query](https://github.com/dabit3/dynamodb-documentclient-cheat-sheet#query---access-items-from-a-table-by-primary-key-or-a-secondary-index--gsi) - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#query-property) - Returns one or more items and item attributes by accessing every item in a table or a secondary index (maximum of 1 MB of data).  
+[delete](https://github.com/dabit3/dynamodb-documentclient-cheat-sheet#delete---delete-a-single-item) - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#delete-property) - Deletes a single item in a table by primary key by delegating to AWS.DynamoDB.deleteItem().  
+[update](https://github.com/dabit3/dynamodb-documentclient-cheat-sheet#batchWrite---seed-a-table-with-data) - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#update-property) - Edits an existing item's attributes, or adds a new item to the table if it does not already exist by delegating to AWS.DynamoDB.updateItem().  
+[batchWrite](https://github.com/dabit3/dynamodb-documentclient-cheat-sheet#batchwrite---seed-a-table-with-data) - [docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#batchWrite-property) - Puts or deletes multiple items in one or more tables by delegating to AWS.DynamoDB.batchWriteItem().
 
 There are also other methods:
 
-[batchGet](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#batchGet-property) - Returns the attributes of one or more items from one or more tables by delegating to AWS.DynamoDB.batchGetItem().    
-[batchWrite](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#batchWrite-property) - Puts or deletes multiple items in one or more tables by delegating to AWS.DynamoDB.batchWriteItem().    
-[createSet](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#createSet-property) - Creates a set of elements inferring the type of set from the type of the first element.    
-[transactGet](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#transactGet-property) - Atomically retrieves multiple items from one or more tables (but not from indexes) in a single account and region.     
-[transactWrite](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#transactWrite-property) - Synchronous write operation that groups up to 10 action requests.     
+[batchGet](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#batchGet-property) - Returns the attributes of one or more items from one or more tables by delegating to AWS.DynamoDB.batchGetItem().  
+[createSet](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#createSet-property) - Creates a set of elements inferring the type of set from the type of the first element.  
+[transactGet](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#transactGet-property) - Atomically retrieves multiple items from one or more tables (but not from indexes) in a single account and region.  
+[transactWrite](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#transactWrite-property) - Synchronous write operation that groups up to 10 action requests.
 
 ## Usage
 
-### Put - Creating a new item / replacing an old item with a new item 
+### Put - Creating a new item / replacing an old item with a new item
 
 [full docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property)
 
@@ -62,34 +61,32 @@ const AWS = require('aws-sdk')
 const docClient = new AWS.DynamoDB.DocumentClient()
 
 var params = {
-  TableName : 'ProductTable',
+  TableName: 'ProductTable',
   Item: {
-     id: '001',
-     price: 100.00,
-     inStock: true,
-     name: 'Yeezys',
-     sizes: [8, 8.5, 9, 10, 11, 12, 13]
-  }
+    id: '001',
+    price: 100.0,
+    inStock: true,
+    name: 'Yeezys',
+    sizes: [8, 8.5, 9, 10, 11, 12, 13],
+  },
 }
 
-docClient.put(params, function(err, data) {
+docClient.put(params, function (err, data) {
   if (err) console.log(err)
   else console.log(data)
 })
 
-
 // async function abstraction
-async function createItem(itemData){
+async function createItem(itemData) {
   var params = {
     TableName: 'ProductTable',
-    Item: itemData
+    Item: itemData,
   }
   try {
     await docClient.put(params).promise()
   } catch (err) {
     return err
   }
-  
 }
 
 // usage
@@ -102,7 +99,6 @@ exports.handler = async (event, context) => {
     return { error: err }
   }
 }
-
 ```
 
 ### scan - scanning and returning all of the items in the database
@@ -114,19 +110,19 @@ const AWS = require('aws-sdk')
 const docClient = new AWS.DynamoDB.DocumentClient()
 
 var params = {
-  TableName : 'ProductTable',
-  FilterExpression : '#shoename = :shoename', // optional
-  ExpressionAttributeValues : {':shoename' : 'yeezys'}, // optional
-  ExpressionAttributeNames: { '#shoename': 'name' } // optional
+  TableName: 'ProductTable',
+  FilterExpression: '#shoename = :shoename', // optional
+  ExpressionAttributeValues: { ':shoename': 'yeezys' }, // optional
+  ExpressionAttributeNames: { '#shoename': 'name' }, // optional
 }
 
-docClient.scan(params, function(err, data) {
+docClient.scan(params, function (err, data) {
   if (err) console.log(err)
   else console.log(data)
 })
 
 // async function abstraction
-async function listItems(){
+async function listItems() {
   var params = {
     TableName: 'ProductTable',
   }
@@ -158,22 +154,22 @@ const AWS = require('aws-sdk')
 const docClient = new AWS.DynamoDB.DocumentClient()
 
 var params = {
-  TableName : 'ProductTable',
+  TableName: 'ProductTable',
   Key: {
-    HashKey: 'hashkey'
-  }
+    HashKey: 'hashkey',
+  },
 }
 
-docClient.get(params, function(err, data) {
+docClient.get(params, function (err, data) {
   if (err) console.log(err)
   else console.log(data)
 })
 
 // async function abstraction
-async function getItem(id){
+async function getItem(id) {
   var params = {
-    TableName : 'ProductTable',
-    Key: { id }
+    TableName: 'ProductTable',
+    Key: { id },
   }
   try {
     const data = await docClient.get(params).promise()
@@ -207,22 +203,22 @@ var params = {
   IndexName: 'type-index',
   KeyConditionExpression: '#typename = :typename', // this equals "type = hat"
   ExpressionAttributeNames: { '#typename': 'type' },
-  ExpressionAttributeValues: { ':typename': 'hat' }
+  ExpressionAttributeValues: { ':typename': 'hat' },
 }
 
-docClient.query(params, function(err, data) {
-   if (err) console.log(err);
-   else console.log(data);
-});
+docClient.query(params, function (err, data) {
+  if (err) console.log(err)
+  else console.log(data)
+})
 
 // async function abstraction
-async function queryItems(type){
+async function queryItems(type) {
   var params = {
     TableName: 'ProductTable',
     IndexName: 'type-index',
     ExpressionAttributeNames: { '#typename': 'type' },
     KeyConditionExpression: '#typename = :typename',
-    ExpressionAttributeValues: { ':typename': type }
+    ExpressionAttributeValues: { ':typename': type },
   }
   try {
     const data = await docClient.query(params).promise()
@@ -252,23 +248,22 @@ const AWS = require('aws-sdk')
 const docClient = new AWS.DynamoDB.DocumentClient()
 
 var params = {
-  TableName : 'ProductTable',
+  TableName: 'ProductTable',
   Key: {
     id: 'my-item-id-to-delete',
-  }
-};
+  },
+}
 
-docClient.delete(params, function(err, data) {
-   if (err) console.log(err);
-   else console.log(data);
-});
-
+docClient.delete(params, function (err, data) {
+  if (err) console.log(err)
+  else console.log(data)
+})
 
 // async function abstraction
-async function deleteItem(id){
+async function deleteItem(id) {
   var params = {
-    TableName : 'ProductTable',
-    Key: { id }
+    TableName: 'ProductTable',
+    Key: { id },
   }
   try {
     await docClient.delete(params).promise()
@@ -298,23 +293,23 @@ const docClient = new AWS.DynamoDB.DocumentClient()
 
 var params = {
   TableName: 'ProductTable',
-  Key: { id : 'my-item-id' },
+  Key: { id: 'my-item-id' },
   UpdateExpression: 'set price = :newprice',
-  ExpressionAttributeValues: { ':newprice': 100 }
+  ExpressionAttributeValues: { ':newprice': 100 },
 }
 
-docClient.update(params, function(err, data) {
-   if (err) console.log(err);
-   else console.log(data);
-});
+docClient.update(params, function (err, data) {
+  if (err) console.log(err)
+  else console.log(data)
+})
 
 // async function abstraction
-async function updateItem(id, price){
+async function updateItem(id, price) {
   var params = {
     TableName: 'ProductTable',
     Key: { id },
     UpdateExpression: 'set price = :newprice',
-    ExpressionAttributeValues: { ':newprice': price }
+    ExpressionAttributeValues: { ':newprice': price },
   }
   try {
     await docClient.update(params).promise()
@@ -333,4 +328,76 @@ exports.handler = async (event, context) => {
     return { error: err }
   }
 }
+```
+
+### batchWrite - Seed a table with data
+
+[full docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#batchWrite-property)
+
+```js
+const AWS = require('aws-sdk')
+const docClient = new AWS.DynamoDB.DocumentClient()
+
+// JSON data
+const fetchedData = [
+  { language: 'JavaScript', isFun: true },
+  { language: 'Rust', isFun: true },
+]
+
+// format data for docClient
+const seedData = fetchedData.map((item) => {
+  return {
+    PutRequest: {
+      Item: item,
+    },
+  }
+})
+
+/* We can only batch-write 25 items at a time,
+  so we'll store both the quotient, as well as what's left.
+  */
+
+let quotient = Math.floor(seedData.length / 25)
+const remainder = (seedData.length % 25) + 1
+
+/* Upload in increments of 25 */
+
+let batchMultiplier = 1
+while (quotient > 0) {
+  for (let i = 0; i < seedData.length - 1; i += 25) {
+    docClient.batchWrite(
+      {
+        RequestItems: {
+          YOUR_TABLE_NAME: seedData.slice(i, 25 * batchMultiplier),
+        },
+      },
+      (err, data) => {
+        if (err) {
+          console.log('something went wrong...')
+        } else {
+          console.log('yay...uploaded!')
+        }
+      }
+    )
+    console.log({ quotient })
+    ++batchMultiplier
+    --quotient
+  }
+}
+
+/* Upload the remaining items (less than 25) */
+docClient.batchWrite(
+  {
+    RequestItems: {
+      YOUR_TABLE_NAME: seedData.slice(seedData.length - remainder),
+    },
+  },
+  (err, data) => {
+    if (err) {
+      console.log('something went wrong...')
+    } else {
+      console.log('yay...the remainder uploaded!')
+    }
+  }
+)
 ```
