@@ -358,7 +358,7 @@ const seedData = fetchedData.map((item) => {
   */
 
 let quotient = Math.floor(seedData.length / 25)
-const remainder = (seedData.length % 25) + 1
+const remainder = (seedData.length % 25)
 
 /* Upload in increments of 25 */
 
