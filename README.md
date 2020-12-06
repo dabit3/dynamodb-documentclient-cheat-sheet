@@ -365,7 +365,7 @@ const remainder = (seedData.length % 25)
 let batchMultiplier = 1
 while (quotient > 0) {
   for (let i = 0; i < seedData.length - 1; i += 25) {
-    docClient.batchWrite(
+    await docClient.batchWrite(
       {
         RequestItems: {
           YOUR_TABLE_NAME: seedData.slice(i, 25 * batchMultiplier),
@@ -378,26 +378,28 @@ while (quotient > 0) {
           console.log('yay...uploaded!')
         }
       }
-    )
+    ).promise()
     console.log({ quotient })
     ++batchMultiplier
     --quotient
   }
 }
 
-/* Upload the remaining items (less than 25) */
-docClient.batchWrite(
-  {
-    RequestItems: {
-      YOUR_TABLE_NAME: seedData.slice(seedData.length - remainder),
+/* Upload the remaining items (less than 25) */]
+if(remainder > 0){
+  await docClient.batchWrite(
+    {
+      RequestItems: {
+        YOUR_TABLE_NAME: seedData.slice(seedData.length - remainder),
+      },
     },
-  },
-  (err, data) => {
-    if (err) {
-      console.log('something went wrong...')
-    } else {
-      console.log('yay...the remainder uploaded!')
+    (err, data) => {
+      if (err) {
+        console.log('something went wrong...')
+      } else {
+        console.log('yay...the remainder uploaded!')
+      }
     }
-  }
-)
+  ).promise()
+}
 ```
