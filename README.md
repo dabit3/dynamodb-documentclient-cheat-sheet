@@ -353,53 +353,49 @@ const seedData = fetchedData.map((item) => {
   }
 })
 
-/* We can only batch-write 25 items at a time,
-  so we'll store both the quotient, as well as what's left.
-  */
+  
+function* executeEach<T>(array: Array<T>, sectionSize: number): Generator<Array<T>> {
 
-let quotient = Math.floor(seedData.length / 25)
-const remainder = (seedData.length % 25)
+  let batchMultiplier = 1;
+
+  // split the items into batches 
+  for (let i = 0; i < array.length; i += sectionSize) {
+
+    const subArr = array.slice(i, sectionSize * batchMultiplier);
+
+    batchMultiplier++;
+
+    yield subArr;
+  }
+
+}
 
 /* Upload in increments of 25 */
+  const batchedItems = executeEach<Record<string, string>>(seedData, 25);
 
-let batchMultiplier = 1
-while (quotient > 0) {
-  for (let i = 0; i < seedData.length - 1; i += 25) {
-    await docClient.batchWrite(
-      {
-        RequestItems: {
-          YOUR_TABLE_NAME: seedData.slice(i, 25 * batchMultiplier),
-        },
-      },
-      (err, data) => {
-        if (err) {
-          console.log('something went wrong...')
-        } else {
-          console.log('yay...uploaded!')
+  while (true) {
+
+    const currentItems = batchedItems.next();
+
+    if (currentItems.done) break;
+
+    try {
+
+      const result = await docClient.batchWrite(
+        {
+          RequestItems: {
+            YOUR_TABLE_NAME: currentItems
+          },
         }
-      }
-    ).promise()
-    console.log({ quotient })
-    ++batchMultiplier
-    --quotient
-  }
-}
+      ).promise()
 
-/* Upload the remaining items (less than 25) */]
-if(remainder > 0){
-  await docClient.batchWrite(
-    {
-      RequestItems: {
-        YOUR_TABLE_NAME: seedData.slice(seedData.length - remainder),
-      },
-    },
-    (err, data) => {
-      if (err) {
-        console.log('something went wrong...')
-      } else {
-        console.log('yay...the remainder uploaded!')
-      }
+      console.log(result);
+
+    } catch (err) {
+      console.log("Error!");
+      console.log(err);
     }
-  ).promise()
-}
+
+
+  }
 ```
