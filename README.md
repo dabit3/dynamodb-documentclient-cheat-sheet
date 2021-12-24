@@ -384,7 +384,7 @@ function* executeEach<T>(array: Array<T>, sectionSize: number): Generator<Array<
       const result = await docClient.batchWrite(
         {
           RequestItems: {
-            tableName: currentItems
+            YOUR_TABLE_NAME: currentItems
           },
         }
       ).promise()
